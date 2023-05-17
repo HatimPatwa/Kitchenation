@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -11,7 +12,15 @@ import { NavbarComponent } from './navbar/navbar.component';
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 3000,
+      progressBar: true,
+      preventDuplicates: true,
+      resetTimeoutOnDuplicate: true,
+    })
+
   ],
   exports: [
     NavbarComponent

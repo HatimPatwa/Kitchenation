@@ -1,5 +1,5 @@
 <div class="main-section">
-    <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice(invoiceForm.value)">
+    <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
         <div class="form-section">
             <div class="form-header">
                 <h2 class="kt-heading mb-4">Enter Customer and Invoice Information</h2>
@@ -8,19 +8,22 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="cust_name" placeholder="customer name here">
+                            <input type="text" formControlName="customerName" class="form-control" id="cust_name"
+                                placeholder="customer name here">
                             <label for="floatingInput">Customer Name</label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="cust_email" placeholder="name@example.com">
+                            <input type="email" formControlName="customerEmail" class="form-control" id="cust_email"
+                                placeholder="name@example.com">
                             <label for="floatingInput">Email address</label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="cust_email" placeholder="invoice number here">
+                            <input type="text" formControlName="invoiceNumber" class="form-control" id="cust_email"
+                                placeholder="invoice number here">
                             <label for="floatingInput">Invoice no.</label>
                         </div>
                     </div>
@@ -28,16 +31,46 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="cust_email" placeholder="name@example.com">
+                            <input type="email" formControlName="customerAddress" class="form-control" id="cust_email"
+                                placeholder="name@example.com">
                             <label for="floatingInput">Customer's address</label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="cust_email" placeholder="invoice number here">
+                            <input type="date" formControlName="invoiceDate" class="form-control" id="cust_email"
+                                placeholder="invoice number here">
                             <label for="floatingInput">Invoice date.</label>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+
+                            <select formControlName="customerCountry" (change)="getStates()"
+                                class="form-select form-select-lg mb-3 pb-0 pt-3" aria-label=".form-select-lg">
+                                <!-- <option selected>Select Country</option> -->
+                                <option *ngFor="let obj of countries" [value]="obj.country">{{obj.country}}
+                                </option>
+
+                            </select>
+                            <label for="floatingInput">Country</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select formControlName="customerState" class="form-select form-select-lg mb-3 pb-0 pt-3"
+                                aria-label=".form-select-lg">
+                                <!-- <option selected>Select Country</option> -->
+                                <option *ngFor="let state of states" [value]="state">{{state}}
+                                </option>
+
+                            </select>
+                            <label for="floatingInput">State</label>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -54,16 +87,19 @@
                     </div>
 
                 </div>
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="cust_name" placeholder="customer name here">
-                            <label for="floatingInput">Customer Name</label>
+                            <input type="text" formControlName="customerPhone" class="form-control" id="cust_name"
+                                placeholder="customer phone here">
+                            <label for="floatingInput">Customer phone</label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="cust_email" placeholder="name@example.com">
+                            <input type="email" formControlName="customerEmail" class="form-control" id="cust_email"
+                                placeholder="name@example.com">
                             <label for="floatingInput">Email address</label>
                         </div>
                     </div>
@@ -109,25 +145,25 @@
                         </div>
                         <div class="col-md-2">
                             <div class="mb-3">
-                                <span *ngIf="i==0" class="item-amount">Amount</span>
+                                <span *ngIf="i===0" class="item-amount">Amount</span>
                                 <h4 class="item-amount-value" [ngClass]="{'mt-3': i!==0}">$
                                     {{products.at(i).get('netAmount')?.value}}
                                 </h4>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-floating mb-3">
-                                <button class="btn btn-danger" (click)="removeProduct(i)"><i class="fa "></i></button>
+                        <div class="col-md-1 text-center item-amount-col">
+                            <div class="form-floating">
+                                <button *ngIf="i!==0" class="btn btn-danger btn-circle" (click)="removeProduct(i)"><i
+                                        class="fa fa-xmark "></i></button>
                             </div>
                         </div>
-
 
                     </div>
 
                 </ng-container>
 
                 <div>
-                    <button class="btn btn-success" (click)="addProduct()">Add</button>
+                    <button type="button" class="btn btn-success" (click)="addProduct()">Add</button>
                 </div>
 
             </div>

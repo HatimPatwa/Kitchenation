@@ -27,3 +27,17 @@
 .item-amount{
     color: #6e707e;
 }
+
+.item-amount-col{
+    padding-top: 12px;
+}
+
+.btn-circle {
+    width: 35px;
+    height: 35px;
+    padding: 5px 0px;
+    border-radius: 20px;
+    text-align: center;
+    /* font-size: 12px; */
+    line-height: 1.42857;
+}
