@@ -14,6 +14,8 @@ export class CreateInvoiceComponent implements OnInit {
   countries: Array<any> = countries;
   states: Array<string> = [];
 
+  submitted: boolean = false;
+
   constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -22,11 +24,11 @@ export class CreateInvoiceComponent implements OnInit {
 
   invoiceForm: FormGroup = new FormGroup({
     customerName: new FormControl('', Validators.required),
+    customerEmail: new FormControl('', [Validators.required, Validators.email]),
     customerAddress: new FormControl('', Validators.required),
     customerCountry: new FormControl('India', Validators.required),
     customerState: new FormControl('', Validators.required),
     customerPhone: new FormControl('', Validators.required),
-    customerEmail: new FormControl('', Validators.required),
     invoiceNumber: new FormControl('', Validators.required),
     invoiceDate: new FormControl(new Date().toISOString().substring(0, 10), Validators.required),
     dueDate: new FormControl('', Validators.required),
@@ -37,7 +39,7 @@ export class CreateInvoiceComponent implements OnInit {
         name: new FormControl('', Validators.required),
         quantity: new FormControl(1, Validators.required),
         rate: new FormControl(0, Validators.required),
-        netAmount: new FormControl(52.23, Validators.required),
+        netAmount: new FormControl(0.00, Validators.required),
       })
     ])
   });
@@ -61,17 +63,34 @@ export class CreateInvoiceComponent implements OnInit {
       rate: new FormControl(0, Validators.required),
       netAmount: new FormControl(0.00, Validators.required),
     }));
+  }
 
 
+  calculateItemAmount(index: number) {
+    let amt = this.invoiceForm.value.products[index].quantity * this.invoiceForm.value.products[index].rate;
+    console.log(this.invoiceForm.value.products[index].quantity * this.invoiceForm.value.products[index].rate);
+    this.products.at(index).patchValue({ netAmount: amt });
+    this.calculateNetTotal();
+  }
+
+
+  calculateNetTotal() {
+    let netTotal = 0;
+    this.invoiceForm.value.products.forEach((product: any) => {
+      netTotal += product.netAmount;
+    });
+    this.invoiceForm.patchValue({ netTotal: netTotal });
   }
 
 
   removeProduct(index: number) {
     const products = this.invoiceForm.get('products') as FormArray;
     products.removeAt(index);
+    this.calculateNetTotal();
   }
 
   saveInvoice() {
+    console.log(this.invoiceForm.value);
     if (this.invoiceForm.invalid) {
       this.toastr.error('Please fill all the required fields');
       return;

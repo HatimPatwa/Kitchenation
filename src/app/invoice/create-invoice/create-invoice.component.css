@@ -41,3 +41,35 @@
     /* font-size: 12px; */
     line-height: 1.42857;
 }
+
+
+.line-item_add {
+    border-bottom: 1px solid #d2d5d9;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+
+.line-item_add > button {
+    background: none;
+    border: none;
+    line-height: 2em;
+}
+
+.line-item_add > button > span {
+    font-size: 1.2em;
+    color: #008060;
+    text-decoration:underline;
+}
+
+
+.line-item_add > button > i {
+    font-size: 1em;
+    color: #008060;
+}
+
+
+.subtotal-label{
+    font-size: 1.4em;
+    color: #6e707e;
+}
