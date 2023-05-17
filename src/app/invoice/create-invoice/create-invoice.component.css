@@ -1,0 +1,29 @@
+.main-section{
+    margin: 20px 10%;
+
+}
+
+.form-body{
+    margin-right: 3rem;
+}
+
+.form-header {
+    display: flow-root;
+    border-bottom: 1px solid #d2d5d9;
+    margin-bottom: 2em;
+}
+
+.kt-heading {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.form-floating>label{
+    font-size: 1em; 
+    color: #6e707e;
+}
+
+.item-amount{
+    color: #6e707e;
+}
