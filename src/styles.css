@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+.main-section {
+    margin: 20px 10%;
+
+}
+
+.form-body {
+    /* margin-right: rem; */
+}
+
+.form-header {
+    display: flow-root;
+    border-bottom: 1px solid #d2d5d9;
+    margin-bottom: 2em;
+}
+
+.kt-heading {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}

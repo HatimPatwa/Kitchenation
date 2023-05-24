@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
   },
   {
+    path: 'inventory',
+    loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule),
+  },
+  {
     path: '**',
     redirectTo: 'invoice'
   }

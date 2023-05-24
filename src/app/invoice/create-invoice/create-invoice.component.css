@@ -1,34 +1,13 @@
-.main-section{
-    margin: 20px 10%;
-
-}
-
-.form-body{
-    margin-right: 3rem;
-}
-
-.form-header {
-    display: flow-root;
-    border-bottom: 1px solid #d2d5d9;
-    margin-bottom: 2em;
-}
-
-.kt-heading {
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin-bottom: 0.5rem;
-}
-
-.form-floating>label{
-    font-size: 1em; 
+.form-floating>label {
+    font-size: 1em;
     color: #6e707e;
 }
 
-.item-amount{
+.item-amount {
     color: #6e707e;
 }
 
-.item-amount-col{
+.item-amount-col {
     padding-top: 12px;
 }
 
@@ -50,26 +29,39 @@
     margin-top: 1em;
 }
 
-.line-item_add > button {
+.line-item_add>button {
     background: none;
     border: none;
     line-height: 2em;
 }
 
-.line-item_add > button > span {
+.line-item_add>button>span {
     font-size: 1.2em;
     color: #008060;
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
 
-.line-item_add > button > i {
+.line-item_add>button>i {
     font-size: 1em;
     color: #008060;
 }
 
 
-.subtotal-label{
+.subtotal-label {
     font-size: 1.4em;
     color: #6e707e;
+}
+
+/* primeng autocomplee adjust */
+
+:host ::ng-deep .autocomplete-field {
+    width: 100%;
+
+    .p-inputtext {
+        width: 100%;
+        padding: 16px 12px;
+        font-family: inherit;
+    }
+
 }

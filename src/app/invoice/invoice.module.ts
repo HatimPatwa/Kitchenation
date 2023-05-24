@@ -7,6 +7,8 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     InvoiceRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    AutoCompleteModule,
+    FormsModule
   ],
   providers: [
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { InvoiceService } from '../invoice.service';
 
 const countries = require('src/assets/countries.json');
 
@@ -15,11 +16,17 @@ export class CreateInvoiceComponent implements OnInit {
   states: Array<string> = [];
 
   submitted: boolean = false;
+  name: string = '';
+  totalInventory: Array<any> = [];
+  filteredInventory: Array<any> = [];
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private invoiceService: InvoiceService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getTotalInventory();
     this.getStates();
+    this.addProduct(); // Add one product row by default
   }
 
   invoiceForm: FormGroup = new FormGroup({
@@ -34,14 +41,7 @@ export class CreateInvoiceComponent implements OnInit {
     dueDate: new FormControl('', Validators.required),
     terms: new FormControl('', Validators.required),
     netTotal: new FormControl(0, Validators.required),
-    products: new FormArray([
-      new FormGroup({
-        name: new FormControl('', Validators.required),
-        quantity: new FormControl(1, Validators.required),
-        rate: new FormControl(0, Validators.required),
-        netAmount: new FormControl(0.00, Validators.required),
-      })
-    ])
+    products: new FormArray([])
   });
 
   get products() {
@@ -58,13 +58,20 @@ export class CreateInvoiceComponent implements OnInit {
   addProduct() {
     const products = this.invoiceForm.get('products') as FormArray;
     products.push(new FormGroup({
+      itemDetails: new FormControl({}),
       name: new FormControl('', Validators.required),
       quantity: new FormControl(1, Validators.required),
+      description: new FormControl(''),
       rate: new FormControl(0, Validators.required),
       netAmount: new FormControl(0.00, Validators.required),
     }));
   }
 
+  removeProduct(index: number) {
+    const products = this.invoiceForm.get('products') as FormArray;
+    products.removeAt(index);
+    this.calculateNetTotal();
+  }
 
   calculateItemAmount(index: number) {
     let amt = this.invoiceForm.value.products[index].quantity * this.invoiceForm.value.products[index].rate;
@@ -83,12 +90,6 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
 
-  removeProduct(index: number) {
-    const products = this.invoiceForm.get('products') as FormArray;
-    products.removeAt(index);
-    this.calculateNetTotal();
-  }
-
   saveInvoice() {
     console.log(this.invoiceForm.value);
     if (this.invoiceForm.invalid) {
@@ -98,6 +99,30 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
 
+  getTotalInventory() {
+    this.invoiceService.getInventory().subscribe((res: any) => {
+      this.totalInventory = res.data;
+      console.log(res);
+    });
+  }
 
+  filterInventory(event: any) {
+    this.filteredInventory = [];
+
+    this.totalInventory.forEach((element: any) => {
+
+      if (element.item.toLowerCase().includes(event.query.toLowerCase())) {
+        console.log(element.item);
+        this.filteredInventory.push(element);
+      }
+    });
+
+  }
+
+  onSelectInventory(event: any, index: number) {
+    console.log(event);
+    this.products.at(index).patchValue({ name: event.item, rate: event.rate, description: event.item_desc });
+    this.calculateItemAmount(index);
+  }
 
 }

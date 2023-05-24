@@ -1,0 +1,25 @@
+<div class="main-section">
+    <div class="form-section">
+        <div class="form-header">
+            <h2 class="kt-heading mb-4">Inventory Dashboard</h2>
+        </div>
+        <div>
+            <p-table #inventoryTable [value]="allInventory" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['item']">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                            (click)="clear(dt1)"></button> -->
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input  pInputText type="text" (input)="inventoryTable.filterGlobal($event.target, 'contains')"
+                                placeholder="Search by Item" />
+                        </span>
+                    </div>
+                </ng-template>
+
+            </p-table>
+        </div>
+    </div>
+</div>
