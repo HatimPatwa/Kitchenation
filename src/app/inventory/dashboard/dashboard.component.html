@@ -8,18 +8,88 @@
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [globalFilterFields]="['item']">
                 <ng-template pTemplate="caption">
-                    <div class="flex">
-                        <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                            (click)="clear(dt1)"></button> -->
-                        <span class="p-input-icon-left ml-auto">
+                    <div class="d-flex">
+                        <button pButton label="Add Item" class="p-button-outlined p-button-success" icon="pi pi-plus"
+                            (click)="openNew()"></button>
+                        <span class="p-input-icon-left ms-auto">
                             <i class="pi pi-search"></i>
-                            <input  pInputText type="text" (input)="inventoryTable.filterGlobal($event.target, 'contains')"
-                                placeholder="Search by Item" />
+                            <input pInputText type="text" (input)="search($event)" placeholder="Search by Item" />
                         </span>
                     </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Item id</th>
+                        <th>Name</th>
+                        <th>Desc</th>
+                        <th>HSN</th>
+                        <th>Rate</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.item}}</td>
+                        <td>{{item.item_desc}}</td>
+                        <td>{{item.hsn}}</td>
+                        <td>{{item.rate | currency:'INR'}}</td>
+                        <td>
+                            <button pButton type="button" icon="pi pi-pencil"
+                                class=" mx-2 p-button-rounded p-button-outlined p-button-warning"
+                                (click)="editItem(item)"></button>
+                            <button pButton type="button" icon="pi pi-trash"
+                                class=" mx-2 p-button-rounded p-button-danger" (click)="deleteItem(item.id)"></button>
+                        </td>
+                    </tr>
                 </ng-template>
 
             </p-table>
         </div>
     </div>
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<p-dialog [(visible)]="itemDialog" [style]="{width: '450px'}" header="Item Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="mb-3">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="ItemForm.item" required autofocus />
+            <small class="p-error" *ngIf="submitted && !ItemForm.item">Name is required.</small>
+        </div>
+        <div class="mb-3">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="ItemForm.item_desc" rows="3" cols="20"></textarea>
+        </div>
+
+        <!-- <div class="field">
+            <label for="inventoryStatus">Inventory Status</label>
+            <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div> -->
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="price">Price</label>
+                <p-inputNumber id="price" [(ngModel)]="ItemForm.rate" mode="currency" currency="INR" [required]="true"
+                    locale="en-IN"></p-inputNumber>
+                <small class="p-error" *ngIf="submitted && !ItemForm.rate">Rate is required.</small>
+            </div>
+
+            <div class="col">
+                <label for="hsn">HSN</label>
+                <p-inputNumber id="hsn" [useGrouping]="false" [(ngModel)]="ItemForm.hsn"
+                    [required]="true"></p-inputNumber>
+                <small class="p-error" *ngIf="submitted && !ItemForm.hsn">HSN Code is required.</small>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveItem()"></button>
+    </ng-template>
+</p-dialog>

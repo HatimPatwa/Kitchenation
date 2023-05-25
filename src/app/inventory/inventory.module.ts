@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { InventoryRoutingModule } from './inventory-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -8,7 +9,12 @@ import { EditInventoryComponent } from './edit-inventory/edit-inventory.componen
 
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SharedModule } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -17,10 +23,17 @@ import { InputTextModule } from 'primeng/inputtext';
     EditInventoryComponent
   ],
   imports: [
+    FormsModule,
+    SharedModule,
     CommonModule,
     InventoryRoutingModule,
     TableModule,
-    InputTextModule
+    InputTextModule,
+    ButtonModule,
+    ConfirmDialogModule,
+    InputNumberModule,
+    DialogModule,
+    InputTextareaModule
   ]
 })
 export class InventoryModule { }

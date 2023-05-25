@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
 
-  url: string = 'http://localhost:3000/';
+  url: string = environment.baseUrl;
   constructor(private http: HttpClient) { }
 
 
@@ -15,6 +15,7 @@ export class InventoryService {
   };
 
   addInventory(data: any) {
+    console.log('add', data);
     return this.http.post(this.url + 'inventory', data);
   }
 
@@ -26,8 +27,9 @@ export class InventoryService {
     return this.http.get(this.url + 'inventory/' + id);
   }
 
-  updateInventory(id: any, data: any) {
-    return this.http.put(this.url + 'inventory/' + id, data);
+  updateInventory(data: any) {
+    console.log('edit', data);
+    return this.http.put(this.url + 'inventory', data);
   }
 
 }
